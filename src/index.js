@@ -2,10 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'semantic-ui-css/semantic.min.css';
 
-import styles from './styles.scss';
-import { Account } from './containers';
+import Routes from './Routes';
 
-const App = () => <Account />;
+const App = () => <Routes />;
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

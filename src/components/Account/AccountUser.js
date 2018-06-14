@@ -11,28 +11,28 @@ const AccountUser = ({ form, updateForm, submitForm, formFieldsWithErrors, formE
     )}
     <Form>
       <Form.Field>
-        <label htmlFor="name">
+        <label htmlFor="firstname">
           Name
           <Form.Input
-            name="name"
-            id="name"
-            value={form.name}
-            placeholder="Enter your name"
+            name="firstname"
+            id="firstname"
+            value={form.firstname}
+            placeholder="Enter your firstname"
             onChange={updateForm}
-            error={formFieldsWithErrors.includes('name')}
+            error={formFieldsWithErrors.includes('firstname')}
           />
         </label>
       </Form.Field>
       <Form.Field>
         <label htmlFor="surname">
-          Surname
+          Lastname
           <Form.Input
-            name="surname"
-            id="surname"
-            value={form.surname}
-            placeholder="Enter your surname"
+            name="lastname"
+            id="lastname"
+            value={form.lastname}
+            placeholder="Enter your lastname"
             onChange={updateForm}
-            error={formFieldsWithErrors.includes('surname')}
+            error={formFieldsWithErrors.includes('lastname')}
           />
         </label>
       </Form.Field>
@@ -69,10 +69,15 @@ AccountUser.propTypes = {
 
 export default compose(
   setDisplayName('AccountUserComponent'),
-  withForm({
-    name: { value: '', required: true },
-    surname: { value: '', required: true },
-    email: { value: '', required: true, type: 'email' },
-  }),
+  withForm(
+    ({ user }) => ({
+      firstname: { value: user.firstname, required: true },
+      lastname: { value: user.lastname, required: true },
+      email: { value: user.email, required: true, type: 'email' },
+    }),
+    ({ saveProfileAction, nextStep }) => form => {
+      saveProfileAction(form).then(() => nextStep());
+    },
+  ),
   pure,
 )(AccountUser);

@@ -6,7 +6,7 @@ import AccountUser from './AccountUser';
 import AccountShop from './AccountShop';
 import AccountWareHouse from './AccountWareHouse';
 
-const Account = ({ setStep, step }) => (
+const Account = ({ setStep, step, userCompleted, ...rest }) => (
   <Container fluid>
     <Segment>
       <Container textAlign="center">
@@ -24,7 +24,7 @@ const Account = ({ setStep, step }) => (
     </Segment>
 
     <Step.Group fluid>
-      <Step onClick={() => setStep(1)} active={step === 1}>
+      <Step onClick={() => setStep(1)} active={step === 1} completed={userCompleted}>
         <Icon name="user" />
         <Step.Content>
           <Step.Title>Your information</Step.Title>
@@ -49,15 +49,16 @@ const Account = ({ setStep, step }) => (
       </Step>
     </Step.Group>
 
-    {step === 1 && <AccountUser />}
-    {step === 2 && <AccountShop />}
-    {step === 3 && <AccountWareHouse />}
+    {step === 1 && <AccountUser {...rest} />}
+    {step === 2 && <AccountShop {...rest} />}
+    {step === 3 && <AccountWareHouse {...rest} />}
   </Container>
 );
 
 Account.propTypes = {
   setStep: PropTypes.func.isRequired,
   step: PropTypes.number,
+  userCompleted: PropTypes.bool.isRequired,
 };
 
 Account.defaultProps = {

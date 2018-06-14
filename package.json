@@ -10,11 +10,11 @@
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",
-    "babel-preset-react": "6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
     "babel-plugin-dynamic-import-node": "1.2.0",
     "babel-plugin-syntax-dynamic-import": "6.18.0",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
+    "babel-preset-react": "6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",
@@ -27,6 +27,7 @@
     "prettier": "^1.13.5"
   },
   "dependencies": {
+    "@reach/router": "^1.1.1",
     "axios": "^0.18.0",
     "cross-env": "^5.1.6",
     "localforage": "^1.7.1",
@@ -34,8 +35,13 @@
     "prop-types": "^15.6.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
+    "react-redux": "^5.0.7",
     "recompose": "^0.27.1",
     "recompose-extends": "^1.9.8",
+    "redux": "^4.0.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^3.0.1",
     "semantic-ui-css": "^2.3.1",
     "semantic-ui-react": "^0.81.1"
   }

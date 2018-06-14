@@ -4,9 +4,17 @@ import { compose, setDisplayName, pure } from 'recompose';
 import { withForm } from 'recompose-extends';
 import { Form, Input, Label, Icon, Popup, Button, Container } from 'semantic-ui-react';
 
-import { CountriesSelect } from '../Common';
+import { CountriesSelect, InputChange } from '../Common';
+import { withLocationForm } from '../../hoc';
 
-const AccountShop = ({ form, updateForm, updateField, submitForm, formFieldsWithErrors }) => (
+const AccountShop = ({
+  form,
+  updateForm,
+  updatePostCode,
+  updateCountry,
+  submitForm,
+  formFieldsWithErrors,
+}) => (
   <div>
     <Form>
       <Form.Field>
@@ -26,11 +34,11 @@ const AccountShop = ({ form, updateForm, updateField, submitForm, formFieldsWith
         <label htmlFor="companyName">
           Company Name
           <Form.Input
-            name="companyName"
-            value={form.url}
+            name="name"
+            value={form.name}
             onChange={updateForm}
-            error={formFieldsWithErrors.includes('companyName')}
-            id="companyName"
+            error={formFieldsWithErrors.includes('name')}
+            id="name"
             placeholder="Enter your company name"
           />
         </label>
@@ -38,30 +46,57 @@ const AccountShop = ({ form, updateForm, updateField, submitForm, formFieldsWith
       <Form.Field>
         <label htmlFor="postcode">
           Your store Zip Code
-          <Form.Input
+          <InputChange
             name="postcode"
             value={form.postcode}
-            onChange={updateForm}
+            onChange={updatePostCode}
             error={formFieldsWithErrors.includes('postcode')}
             id="postcode"
             placeholder="Enter your store zip code"
           />
         </label>
       </Form.Field>
+
       <Form.Field>
         <label htmlFor="country">
           Your store country
-          <CountriesSelect name="country" value={form.country} onChange={updateField} />
+          <CountriesSelect name="country" value={form.country} onChange={updateCountry} />
         </label>
       </Form.Field>
       <Form.Field>
-        <label htmlFor="nif">
+        <label htmlFor="city">
+          City
+          <Form.Input
+            name="city"
+            value={form.city}
+            onChange={updateForm}
+            error={formFieldsWithErrors.includes('city')}
+            id="city"
+            placeholder="Enter your store city"
+          />
+        </label>
+      </Form.Field>
+      <Form.Field>
+        <label htmlFor="address">
+          Address
+          <Form.Input
+            name="address"
+            value={form.address}
+            onChange={updateForm}
+            error={formFieldsWithErrors.includes('address')}
+            id="address"
+            placeholder="Enter your store address"
+          />
+        </label>
+      </Form.Field>
+      <Form.Field>
+        <label htmlFor="registrationNumber">
           NIF/CIF (company registration number)
           <Form.Input
-            name="nif"
-            id="nif"
+            name="registrationNumber"
+            id="registrationNumber"
             placeholder="Enter your nif/cif"
-            error={formFieldsWithErrors.includes('nif')}
+            error={formFieldsWithErrors.includes('registrationNumber')}
           />
         </label>
       </Form.Field>
@@ -91,22 +126,29 @@ const AccountShop = ({ form, updateForm, updateField, submitForm, formFieldsWith
 AccountShop.propTypes = {
   form: PropTypes.shape({}).isRequired,
   updateForm: PropTypes.func.isRequired,
-  updateField: PropTypes.func.isRequired,
+  updatePostCode: PropTypes.func.isRequired,
+  updateCountry: PropTypes.func.isRequired,
   submitForm: PropTypes.func.isRequired,
   formFieldsWithErrors: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default compose(
   setDisplayName('AccountShopComponent'),
-  withForm({
-    url: { value: '', required: true, pattern: '((xn--)?[a-z0-9]+(-[a-z0-9]+)*\\.)+[a-z]{2,}' },
-    companyName: { value: '', required: true },
-    postcode: { value: '', required: true },
-    city: { value: '', required: true },
-    country: { value: '', required: true },
-    address: { value: '', required: true },
-    nif: { value: '' },
-    vat: { value: '' },
-  }),
+  withForm(
+    {
+      url: { value: '', required: true, pattern: '((xn--)?[a-z0-9]+(-[a-z0-9]+)*\\.)+[a-z]{2,}' },
+      name: { value: '', required: true },
+      postcode: { value: '', required: true, pattern: '^(0|[1-9][0-9]*)$' },
+      city: { value: '', required: true },
+      country: { value: '', required: true },
+      address: { value: '', required: true },
+      registrationNumber: { value: '' },
+      vat: { value: '' },
+    },
+    ({ saveProfileCompanyAction, nextStep }) => form => {
+      saveProfileCompanyAction({ company: form }).then(() => nextStep());
+    },
+  ),
+  withLocationForm,
   pure,
 )(AccountShop);
