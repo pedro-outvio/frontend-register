@@ -1,0 +1,30 @@
+{
+  "presets": [
+    "react",
+    "stage-0",
+    [
+      "env",
+      {
+        "targets": {
+          "chrome": "63",
+          "edge": "15",
+          "firefox": "56",
+          "ios": "10",
+          "safari": "10"
+        },
+        "useBuiltIns": true,
+        "debug": false,
+        "modules": false,
+        "exclude": [
+          "web.timers",
+          "web.immediate",
+          "web.dom.iterable"
+        ]
+      }
+    ]
+  ],
+  "plugins": [
+    "transform-object-rest-spread",
+    "syntax-dynamic-import"
+  ]
+}

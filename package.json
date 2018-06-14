@@ -1,0 +1,42 @@
+{
+  "name": "Frontend-Register",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development parcel index.html ",
+    "build": "cross-env NODE_ENV=production parcel build index.html --no-minify --public-url /",
+    "lint": "eslint ./src/**/*.js"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.3",
+    "babel-preset-react": "6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-plugin-dynamic-import-node": "1.2.0",
+    "babel-plugin-syntax-dynamic-import": "6.18.0",
+    "babel-plugin-transform-object-rest-spread": "6.26.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-jest": "^21.17.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.9.1",
+    "parcel-bundler": "^1.8.1",
+    "prettier": "^1.13.5"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cross-env": "^5.1.6",
+    "localforage": "^1.7.1",
+    "node-sass": "^4.9.0",
+    "prop-types": "^15.6.1",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "recompose": "^0.27.1",
+    "recompose-extends": "^1.9.8",
+    "semantic-ui-css": "^2.3.1",
+    "semantic-ui-react": "^0.81.1"
+  }
+}
