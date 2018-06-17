@@ -1,2 +1,3 @@
 export const PROFILE_SAVE_COMPANY = 'profile/SAVE_COMPANY';
 export const PROFILE_SAVE_COMPANY_COMPLETED = 'profile/SAVE_COMPANY_COMPLETED';
+export const PROFILE_DISABLED = 'profile/DISABLED';

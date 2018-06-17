@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, setDisplayName, lifecycle, pure } from 'recompose';
 import { createSelector } from 'reselect';
+import { navigate } from '@reach/router';
 
 import { userAction } from '../../actions';
 import { selectLogged } from '../../selectors';
@@ -28,7 +29,9 @@ export default compose(
   ),
   lifecycle({
     componentDidMount() {
-      this.props.userAction();
+      this.props.userAction().catch(() => {
+        navigate('/login');
+      });
     },
   }),
   pure,

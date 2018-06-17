@@ -4,58 +4,53 @@ import { compose, setDisplayName, pure } from 'recompose';
 import { Form, Button, Message, Container } from 'semantic-ui-react';
 import { withForm } from 'recompose-extends';
 
-const AccountUser = ({ form, updateForm, submitForm, formFieldsWithErrors, formError }) => (
+import { withTypeForm } from '../../hoc';
+import { InputTypeForm } from '../Common';
+
+const AccountUser = ({
+  form,
+  updateForm,
+  submitForm,
+  formFieldsWithErrors,
+  onCompleteField,
+  formError,
+  stepForm,
+}) => (
   <div>
     {formError && (
       <Message error header="There were errors in the form" content="All fields are required." />
     )}
-    <Form>
-      <Form.Field>
-        <label htmlFor="firstname">
-          Name
-          <Form.Input
-            name="firstname"
-            id="firstname"
-            value={form.firstname}
-            placeholder="Enter your firstname"
-            onChange={updateForm}
-            error={formFieldsWithErrors.includes('firstname')}
-          />
-        </label>
-      </Form.Field>
-      <Form.Field>
-        <label htmlFor="surname">
-          Lastname
-          <Form.Input
-            name="lastname"
-            id="lastname"
-            value={form.lastname}
-            placeholder="Enter your lastname"
-            onChange={updateForm}
-            error={formFieldsWithErrors.includes('lastname')}
-          />
-        </label>
-      </Form.Field>
-      <Form.Field>
-        <label htmlFor="email">
-          Email
-          <Form.Input
-            name="email"
-            type="email"
-            id="email"
-            value={form.email}
-            placeholder="Enter your email"
-            onChange={updateForm}
-            error={formFieldsWithErrors.includes('email')}
-          />
-        </label>
-      </Form.Field>
-      <Container textAlign="center">
-        <Button positive onClick={submitForm} type="submit">
-          Save and Continue
-        </Button>
-      </Container>
+    <Form autoComplete="off">
+      <InputTypeForm
+        name="firstname"
+        label="Dinos como te llamas"
+        value={form.firstname}
+        placeholder="Introduce tu nombre"
+        active={stepForm === 1}
+        onCompleted={onCompleteField}
+      />
+      <InputTypeForm
+        name="lastname"
+        label="Dinos cuales son tus apellidos"
+        value={form.lastname}
+        placeholder="Introduce tus apellidos"
+        active={stepForm === 2}
+        onCompleted={onCompleteField}
+      />
+      <InputTypeForm
+        name="email"
+        label="Dinos cual es tu email"
+        value={form.email}
+        placeholder="Introduce tu email"
+        active={stepForm === 3}
+        onCompleted={onCompleteField}
+      />
     </Form>
+    <Container textAlign="center">
+      <Button positive onClick={submitForm} type="submit">
+        Save and Continue
+      </Button>
+    </Container>
   </div>
 );
 
@@ -65,6 +60,8 @@ AccountUser.propTypes = {
   submitForm: PropTypes.func.isRequired,
   formFieldsWithErrors: PropTypes.arrayOf(PropTypes.string).isRequired,
   formError: PropTypes.bool.isRequired,
+  stepForm: PropTypes.number.isRequired,
+  onCompleteField: PropTypes.func.isRequired,
 };
 
 export default compose(
@@ -76,8 +73,9 @@ export default compose(
       email: { value: user.email, required: true, type: 'email' },
     }),
     ({ saveProfileAction, nextStep }) => form => {
-      saveProfileAction(form).then(() => nextStep());
+      nextStep();
     },
   ),
+  withTypeForm,
   pure,
 )(AccountUser);

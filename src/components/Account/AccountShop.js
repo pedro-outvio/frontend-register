@@ -4,8 +4,8 @@ import { compose, setDisplayName, pure } from 'recompose';
 import { withForm } from 'recompose-extends';
 import { Form, Input, Label, Icon, Popup, Button, Container } from 'semantic-ui-react';
 
-import { CountriesSelect, InputChange } from '../Common';
-import { withLocationForm } from '../../hoc';
+import { CountriesSelect, InputChange, InputTypeForm } from '../Common';
+import { withLocationForm, withTypeForm } from '../../hoc';
 
 const AccountShop = ({
   form,
@@ -14,35 +14,25 @@ const AccountShop = ({
   updateCountry,
   submitForm,
   formFieldsWithErrors,
+  stepForm,
 }) => (
   <div>
     <Form>
-      <Form.Field>
-        <label htmlFor="url">
-          URL
-          <Form.Input
-            name="url"
-            id="url"
-            value={form.url}
-            onChange={updateForm}
-            placeholder="Enter the url of your shop"
-            error={formFieldsWithErrors.includes('url')}
-          />
-        </label>
-      </Form.Field>
-      <Form.Field>
-        <label htmlFor="companyName">
-          Company Name
-          <Form.Input
-            name="name"
-            value={form.name}
-            onChange={updateForm}
-            error={formFieldsWithErrors.includes('name')}
-            id="name"
-            placeholder="Enter your company name"
-          />
-        </label>
-      </Form.Field>
+      <InputTypeForm
+        label="Cual es la URL de tu tienda?"
+        name="url"
+        value={form.url}
+        placeholder="Introduce la url de tu tienda"
+        active={stepForm === 1}
+      />
+
+      <InputTypeForm
+        label="Cual es el nombre de tu negocio online?"
+        name="name"
+        value={form.name}
+        placeholder="Introduce el nombre de tu tienda"
+        active={stepForm === 2}
+      />
       <Form.Field>
         <label htmlFor="postcode">
           Your store Zip Code
@@ -60,7 +50,12 @@ const AccountShop = ({
       <Form.Field>
         <label htmlFor="country">
           Your store country
-          <CountriesSelect name="country" value={form.country} onChange={updateCountry} />
+          <CountriesSelect
+            name="country"
+            value={form.country}
+            onChange={updateCountry}
+            error={formFieldsWithErrors.includes('country')}
+          />
         </label>
       </Form.Field>
       <Form.Field>
@@ -116,7 +111,7 @@ const AccountShop = ({
       </Form.Field>
       <Container textAlign="center">
         <Button positive onClick={submitForm} type="submit">
-          Save
+          Save and Continue
         </Button>
       </Container>
     </Form>
@@ -130,25 +125,31 @@ AccountShop.propTypes = {
   updateCountry: PropTypes.func.isRequired,
   submitForm: PropTypes.func.isRequired,
   formFieldsWithErrors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  stepForm: PropTypes.number.isRequired,
 };
 
 export default compose(
   setDisplayName('AccountShopComponent'),
   withForm(
-    {
-      url: { value: '', required: true, pattern: '((xn--)?[a-z0-9]+(-[a-z0-9]+)*\\.)+[a-z]{2,}' },
-      name: { value: '', required: true },
-      postcode: { value: '', required: true, pattern: '^(0|[1-9][0-9]*)$' },
-      city: { value: '', required: true },
-      country: { value: '', required: true },
-      address: { value: '', required: true },
-      registrationNumber: { value: '' },
-      vat: { value: '' },
-    },
+    ({ company }) => ({
+      url: {
+        value: company.url,
+        required: true,
+        pattern: '((xn--)?[a-z0-9]+(-[a-z0-9]+)*\\.)+[a-z]{2,}',
+      },
+      name: { value: company.name, required: true },
+      postcode: { value: company.postcode, required: true, pattern: '^(0|[1-9][0-9]*)$' },
+      city: { value: company.city, required: true },
+      country: { value: company.country, required: true },
+      address: { value: company.address, required: true },
+      registrationNumber: { value: company.registrationNumber },
+      vat: { value: company.vat },
+    }),
     ({ saveProfileCompanyAction, nextStep }) => form => {
-      saveProfileCompanyAction({ company: form }).then(() => nextStep());
+      saveProfileCompanyAction(form).then(() => nextStep());
     },
   ),
   withLocationForm,
+  withTypeForm,
   pure,
 )(AccountShop);

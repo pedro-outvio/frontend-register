@@ -44,6 +44,7 @@ module.exports = {
     'jest/valid-expect': 'error',
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'react/no-multi-comp': 0,
+    "react/no-unescaped-entities": 0,
     'no-empty-pattern': 0,
     'import/no-extraneous-dependencies': [
       'error',

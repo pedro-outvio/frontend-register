@@ -8,3 +8,9 @@ export const selectLogged = () => createSelector(selectStateUser(), stateUser =>
 
 export const selectListAddress = () =>
   createSelector(selectStateUser(), stateUser => stateUser.user.addresses);
+
+export const selectCompany = () =>
+  createSelector(selectStateUser(), stateUser => stateUser.user.storeSettings.company);
+
+export const selectWarehouses = () =>
+  createSelector(selectStateUser(), stateUser => stateUser.user.storeSettings.warehouses);

@@ -1,0 +1,120 @@
+@import './colors.scss';
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  width: 100%;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.ui.positive.button {
+  background-color: $colorOutvio
+}
+
+.ui.positive.button:hover, .ui.positive.button:focus, .ui.positive.button:active {
+  background-color: $colorOutvio
+}
+
+.ui.form input[type=text]:focus, .ui.form input[type=email]:focus, .ui.form input[type=password]:focus {
+  border-color: $colorOutvio
+}
+
+.ui.inverted.menu {
+  background-color: $colorOutvio
+}
+
+a {
+  color: $colorOutvio;
+}
+
+a:hover {
+  color: $colorOutvio;
+  text-decoration: underline;
+}
+
+
+.ui.message p {
+  margin: 0;
+  padding: 0;
+}
+
+.ui.menu {
+  background-color: $colorOutvioGrey;
+  border: 0;
+  box-shadow: none;
+}
+
+.ui.menu .item {
+  color: $colorOutvioGreen;
+}
+
+.ui.menu .active.item {
+  background: $colorOutvioGreen;
+  color: white;
+}
+
+.ui.menu a.item:hover, .ui.menu .active.item:hover, .ui.vertical.menu .active.item:hover {
+  background: $colorOutvio;
+  color: white;
+}
+
+.ui.inverted.green.segment {
+  background: $colorOutvio !important;
+}
+
+.ui.basic.positive.button, .ui.basic.positive.buttons .button {
+  color: $colorOutvio !important;
+  box-shadow:0 0 0 1px $colorOutvio inset!important
+}
+
+.ui.basic.positive.button:hover, .ui.basic.positive.buttons .button:hover, .ui.basic.positive.button:focus, .ui.basic.positive.buttons .button:focus  {
+  color: $colorOutvio !important;
+  box-shadow:0 0 0 1px $colorOutvio inset!important
+}
+
+.ui.steps .step.active .title {
+  color: $colorOutvioGreen !important;
+}
+
+.ui.basic.green.button, .ui.basic.green.buttons .button, .ui.basic.green.buttons .button:hover, .ui.basic.green.button:hover {
+  color: $colorOutvio !important;
+  box-shadow: 0 0 0 1px $colorOutvio inset!important
+}
+
+.ui.green.label {
+  background: $colorOutvio !important;
+  border-color: $colorOutvio !important;
+}
+
+.ui.input.error>input {
+  background-color: #fff6f6 !important;
+  border-color: #e0b4b4 !important;
+  color: #9f3a38 !important;
+  box-shadow: none !important;
+}
+
+.ui.link {
+  color: $colorOutvio !important;
+  text-decoration: underline;
+  border: 0 !important;
+  cursor: pointer;
+  outline: 0;
+  background: transparent;
+}
+
+
+
+
+@media (max-width: 600px) {
+
+  .ui.menu {
+    width: 100% !important;
+    position: relative;
+    overflow: auto;
+  }
+}

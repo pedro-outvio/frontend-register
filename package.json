@@ -24,25 +24,28 @@
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.9.1",
     "parcel-bundler": "^1.8.1",
+    "postcss-modules": "^1.1.0",
     "prettier": "^1.13.5"
   },
   "dependencies": {
     "@reach/router": "^1.1.1",
     "axios": "^0.18.0",
+    "classnames": "^2.2.6",
     "cross-env": "^5.1.6",
     "localforage": "^1.7.1",
     "node-sass": "^4.9.0",
     "prop-types": "^15.6.1",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
+    "react": "^0.14.0 || ^15.0.0-0 || ^16.0.0-0",
+    "react-dom": "15.x || 16.x || 16.4.0-alpha.0911da3",
     "react-redux": "^5.0.7",
     "recompose": "^0.27.1",
     "recompose-extends": "^1.9.8",
-    "redux": "^4.0.0",
+    "redux": "^2.0.0 || ^3.0.0 || ^4.0.0-0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "reselect": "^3.0.1",
     "semantic-ui-css": "^2.3.1",
-    "semantic-ui-react": "^0.81.1"
+    "semantic-ui-react": "^0.81.1",
+    "uuid": "^3.2.1"
   }
 }

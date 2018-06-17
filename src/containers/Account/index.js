@@ -1,18 +1,47 @@
-import { compose, setDisplayName, pure, withStateHandlers, lifecycle } from 'recompose';
+import { compose, setDisplayName, pure, withStateHandlers } from 'recompose';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import { selectUser, selectProfileCompletedUser } from '../../selectors';
-import { saveProfileAction, saveProfileCompanyAction } from '../../actions';
+import {
+  selectUser,
+  selectProfileCompletedUser,
+  selectProfileCompletedCompany,
+  selectProfileCompletedWarehouses,
+  selectCompany,
+  selectWarehouses,
+} from '../../selectors';
+import {
+  saveProfileAction,
+  saveProfileCompanyAction,
+  saveProfileWareHouseAction,
+  disableProfileAction,
+} from '../../actions';
 import Account from '../../components/Account';
 
 export default compose(
   connect(
-    createSelector(selectUser(), selectProfileCompletedUser(), (user, userCompleted) => ({
-      user,
-      userCompleted,
-    })),
-    { saveProfileAction, saveProfileCompanyAction },
+    createSelector(
+      selectUser(),
+      selectProfileCompletedUser(),
+      selectProfileCompletedCompany(),
+      selectProfileCompletedWarehouses(),
+      selectWarehouses(),
+      selectCompany(),
+      (user, userCompleted, companyCompleted, warehousesCompleted, warehouses, company) => ({
+        user,
+        userCompleted,
+        companyCompleted,
+        warehousesCompleted,
+        warehouses,
+        company,
+      }),
+    ),
+    {
+      saveProfileAction,
+      saveProfileCompanyAction,
+      saveProfileWareHouseAction,
+      disableProfileAction,
+    },
   ),
   withStateHandlers(
     {
@@ -22,9 +51,4 @@ export default compose(
   ),
   setDisplayName('AccountContainer'),
   pure,
-  lifecycle({
-    componentDidMount() {
-      console.log(this.props);
-    },
-  }),
 )(Account);
