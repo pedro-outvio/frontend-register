@@ -1,21 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose, setDisplayName, pure } from 'recompose';
-import { Form, Button, Container, Card, Icon } from 'semantic-ui-react';
+import { Form, Card, Icon } from 'semantic-ui-react';
 import { withForm } from 'recompose-extends';
 
-import { InputChange, CountriesSelect } from '../Common';
-import { withLocationForm } from '../../hoc';
+import { InputTypeForm } from '../Common';
+import { withLocationForm, withTypeForm } from '../../hoc';
 
-const AccountWareHouse = ({
-  form,
-  updateForm,
-  submitForm,
-  updatePostCode,
-  updateCountry,
-  formFieldsWithErrors,
-  warehouses,
-}) => (
+const AccountWareHouse = ({ form, warehouses, stepForm, onCompleteField }) => (
   <div>
     {warehouses.length > 0 && (
       <Card.Group>
@@ -32,95 +24,63 @@ const AccountWareHouse = ({
     )}
     {warehouses.length === 0 && (
       <Form>
-        <Form.Field>
-          <label htmlFor="alias">
-            Warehouse Alias
-            <Form.Input
-              name="name"
-              value={form.name}
-              onChange={updateForm}
-              id="name"
-              placeholder="Enter your warehouse alias"
-              error={formFieldsWithErrors.includes('name')}
-            />
-          </label>
-        </Form.Field>
-        <Form.Field>
-          <label htmlFor="postcode">
-            Warehouse zip code
-            <InputChange
-              value={form.postcode}
-              onChange={updatePostCode}
-              name="postcode"
-              id="postcode"
-              placeholder="Enter your warehouse zip code"
-              error={formFieldsWithErrors.includes('postcode')}
-            />
-          </label>
-        </Form.Field>
-        <Form.Field>
-          <label htmlFor="country">
-            Warehouse updateCountry
-            <CountriesSelect name="country" value={form.country} onChange={updateCountry} />
-          </label>
-        </Form.Field>
-        <Form.Field>
-          <label htmlFor="city">
-            Warehouse city
-            <Form.Input
-              name="city"
-              id="city"
-              value={form.city}
-              onChange={updateForm}
-              placeholder="Enter the city of your warehouse"
-              error={formFieldsWithErrors.includes('city')}
-            />
-          </label>
-        </Form.Field>
-        <Form.Field>
-          <label htmlFor="address">
-            Warehouse address
-            <Form.Input
-              value={form.address}
-              onChange={updateForm}
-              name="address"
-              id="address"
-              placeholder="Enter the address of your warehouse"
-              error={formFieldsWithErrors.includes('address')}
-            />
-          </label>
-        </Form.Field>
-        <Form.Field>
-          <label htmlFor="contactName">
-            Contact person
-            <Form.Input
-              value={form.contactName}
-              onChange={updateForm}
-              name="contactName"
-              id="contactName"
-              placeholder="Enter the contact person"
-              error={formFieldsWithErrors.includes('contactName')}
-            />
-          </label>
-        </Form.Field>
-        <Form.Field>
-          <label htmlFor="contactPhone">
-            Contact phone number
-            <Form.Input
-              value={form.contactPhone}
-              onChange={updateForm}
-              name="contactPhone"
-              id="contactPhone"
-              placeholder="Enter the contact phone number"
-              error={formFieldsWithErrors.includes('contactPhone')}
-            />
-          </label>
-        </Form.Field>
-        <Container textAlign="center">
-          <Button positive onClick={submitForm} type="submit">
-            Save and Continue
-          </Button>
-        </Container>
+        <InputTypeForm
+          name="name"
+          label="Ponle un nombre a tu almacen"
+          value={form.name}
+          placeholder="Introduce el alias del almacen"
+          active={stepForm === 1}
+          onCompleted={onCompleteField}
+        />
+        <InputTypeForm
+          name="postcode"
+          label="¿Cuál es el código postal de tu almacen?"
+          value={form.postcode}
+          placeholder="Introduce el código postal de tu almacen"
+          active={stepForm === 2}
+          onCompleted={onCompleteField}
+        />
+        <InputTypeForm
+          name="country"
+          label="¿Cuál es el país de tu almacen?"
+          value={form.country}
+          placeholder="Introduce el país de tu almacen"
+          active={stepForm === 3}
+          onCompleted={onCompleteField}
+        />
+        <InputTypeForm
+          name="city"
+          label="¿Cuál es la ciudad de tu almacen?"
+          value={form.country}
+          placeholder="Introduce la ciudad de tu almacen"
+          active={stepForm === 4}
+          onCompleted={onCompleteField}
+        />
+        <InputTypeForm
+          name="address"
+          label="¿Cuál es la dirección de tu almacen?"
+          value={form.address}
+          placeholder="Introduce la dirección de tu almacen"
+          active={stepForm === 5}
+          onCompleted={onCompleteField}
+        />
+        <InputTypeForm
+          name="contactName"
+          label="Dinos el nombre del contacto de tu almacen"
+          value={form.contactName}
+          placeholder="Introduce el nombre del contacto de tu almacen"
+          active={stepForm === 6}
+          onCompleted={onCompleteField}
+        />
+
+        <InputTypeForm
+          name="contactPhone"
+          label="Dinos el teléfono del contacto de tu almacen"
+          value={form.contactPhone}
+          placeholder="Introduce el teléfono del contacto de tu almacen"
+          active={stepForm === 7}
+          onCompleted={onCompleteField}
+        />
       </Form>
     )}
   </div>
@@ -128,12 +88,9 @@ const AccountWareHouse = ({
 
 AccountWareHouse.propTypes = {
   form: PropTypes.shape({}).isRequired,
-  updateForm: PropTypes.func.isRequired,
-  submitForm: PropTypes.func.isRequired,
-  updatePostCode: PropTypes.func.isRequired,
-  updateCountry: PropTypes.func.isRequired,
-  formFieldsWithErrors: PropTypes.arrayOf(PropTypes.string).isRequired,
   warehouses: PropTypes.arrayOf(PropTypes.shape({})),
+  stepForm: PropTypes.number.isRequired,
+  onCompleteField: PropTypes.func.isRequired,
 };
 
 AccountWareHouse.defaultProps = {
@@ -153,9 +110,10 @@ export default compose(
       contactPhone: { value: '', required: true, pattern: '^(0|[1-9][0-9]*)$' },
     },
     ({ saveProfileWareHouseAction }) => form => {
-      saveProfileWareHouseAction(form);
+      // saveProfileWareHouseAction(form);
     },
   ),
   withLocationForm,
+  withTypeForm,
   pure,
 )(AccountWareHouse);

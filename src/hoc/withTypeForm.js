@@ -8,6 +8,7 @@ const withTypeForm = compose(
     },
     {
       nextStepForm: ({ stepForm }) => () => ({ stepForm: stepForm + 1 }),
+      activeStepForm: () => value => ({ stepForm: value }),
     },
   ),
   withHandlers({
@@ -15,8 +16,6 @@ const withTypeForm = compose(
       name,
       value,
     ) => {
-      console.log(numSteps);
-
       updateField(name, value);
 
       if (stepForm + 1 > numSteps) {

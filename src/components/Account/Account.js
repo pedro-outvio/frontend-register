@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Step, Container, Segment, Button } from 'semantic-ui-react';
+import { Icon, Container, Segment, Button } from 'semantic-ui-react';
 import cn from 'classnames';
 
 import AccountUser from './AccountUser';
@@ -21,7 +21,6 @@ const Account = ({
   <Container fluid className={styles.container}>
     <div className={styles.header}>
       <LogoOutvio />
-      {`${userCompleted}`}
     </div>
     {!userCompleted &&
       !companyCompleted &&
@@ -48,7 +47,13 @@ const Account = ({
                 {step === 1 && <AccountUser {...rest} />}
               </Container>
             </div>
-            <div className={cn({ [styles.step]: true, [styles.stepShop]: true })}>
+            <div
+              className={cn({
+                [styles.step]: true,
+                [styles.stepShop]: true,
+                [styles.stepActive]: step === 2,
+              })}
+            >
               <Icon name="shop" className={styles.stepIcon} />
               <Container textAlign="center" className={styles.containerForm}>
                 <h3 className={styles.subtitle}>... 2. Cuéntanos cosas de tu tienda</h3>
@@ -56,7 +61,13 @@ const Account = ({
               </Container>
             </div>
 
-            <div className={cn({ [styles.step]: true, [styles.stepWarehouse]: true })}>
+            <div
+              className={cn({
+                [styles.step]: true,
+                [styles.stepWarehouse]: true,
+                [styles.stepActive]: step === 3,
+              })}
+            >
               <Icon name="warehouse" className={styles.stepIcon} />
               <Container textAlign="center" className={styles.containerForm}>
                 <h3 className={styles.subtitle}>... 3. ¿Donde está tu almacén?</h3>

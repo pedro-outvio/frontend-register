@@ -2,14 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Form, Button } from 'semantic-ui-react';
-import {
-  compose,
-  setDisplayName,
-  pure,
-  withHandlers,
-  withStateHandlers,
-  lifecycle,
-} from 'recompose';
+import { compose, setDisplayName, pure, withHandlers, withStateHandlers } from 'recompose';
 
 import styles from './InputTypeForm.scss';
 
@@ -24,15 +17,9 @@ const InputTypeForm = ({
   enabled,
   onSendValue,
   active,
+  onClick,
 }) => (
-  <Form.Field
-    onKeyPress={event => {
-      if (event.key === 'Enter' && enabled) {
-        // onSendValue();
-      }
-    }}
-    className={cn({ [styles.fieldDisabled]: !active })}
-  >
+  <Form.Field className={cn({ [styles.fieldDisabled]: !active })} onClick={onClick}>
     <label htmlFor={name}>
       {label}
       <InputRef
@@ -65,6 +52,7 @@ InputTypeForm.propTypes = {
   onSendValue: PropTypes.func.isRequired,
   enabled: PropTypes.bool.isRequired,
   active: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
 InputTypeForm.defaultProps = {
@@ -73,6 +61,7 @@ InputTypeForm.defaultProps = {
   placeholder: null,
   name: null,
   active: false,
+  onClick: undefined,
 };
 
 export default compose(
@@ -92,6 +81,5 @@ export default compose(
       onCompleted(name, value);
     },
   }),
-
   pure,
 )(InputTypeForm);

@@ -1,21 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose, setDisplayName, pure } from 'recompose';
-import { Form, Button, Message, Container } from 'semantic-ui-react';
+import { Form, Message } from 'semantic-ui-react';
 import { withForm } from 'recompose-extends';
 
 import { withTypeForm } from '../../hoc';
 import { InputTypeForm } from '../Common';
 
-const AccountUser = ({
-  form,
-  updateForm,
-  submitForm,
-  formFieldsWithErrors,
-  onCompleteField,
-  formError,
-  stepForm,
-}) => (
+const AccountUser = ({ form, onCompleteField, formError, stepForm, activeStepForm }) => (
   <div>
     {formError && (
       <Message error header="There were errors in the form" content="All fields are required." />
@@ -46,22 +38,15 @@ const AccountUser = ({
         onCompleted={onCompleteField}
       />
     </Form>
-    <Container textAlign="center">
-      <Button positive onClick={submitForm} type="submit">
-        Save and Continue
-      </Button>
-    </Container>
   </div>
 );
 
 AccountUser.propTypes = {
   form: PropTypes.shape({}).isRequired,
-  updateForm: PropTypes.func.isRequired,
-  submitForm: PropTypes.func.isRequired,
-  formFieldsWithErrors: PropTypes.arrayOf(PropTypes.string).isRequired,
   formError: PropTypes.bool.isRequired,
   stepForm: PropTypes.number.isRequired,
   onCompleteField: PropTypes.func.isRequired,
+  activeStepForm: PropTypes.func.isRequired,
 };
 
 export default compose(
@@ -74,6 +59,7 @@ export default compose(
     }),
     ({ saveProfileAction, nextStep }) => form => {
       nextStep();
+      // saveProfileAction(form);
     },
   ),
   withTypeForm,
